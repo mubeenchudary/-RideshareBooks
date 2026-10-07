@@ -44,8 +44,8 @@ jobs:
         run: |
           sed -i 's#/META-INDEX/{AL2.0,LGPL2.1}#/META-INF/{AL2.0,LGPL2.1}#' app/build.gradle.kts || true
 
-      - name: Build APK
-        run: run: gradle assembleDebug --stacktrace --no-daemon
+      - - name: Build APK
+  run: gradle assembleDebug --stacktrace --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
