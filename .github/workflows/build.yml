@@ -2,7 +2,9 @@ name: Build RideshareBooks APK
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches:
+      - main
+      - master
   workflow_dispatch:
 
 jobs:
@@ -19,10 +21,10 @@ jobs:
           unzip -q RideshareBooks_fixed_project.zip -d extracted
           PROJECT_DIR=$(find extracted -name "settings.gradle.kts" -o -name "settings.gradle" | head -1 | xargs dirname)
           echo "Project directory: $PROJECT_DIR"
-          cp -R "$PROJECT_DIR"/app .
-          cp -R "$PROJECT_DIR"/gradle .
-          cp "$PROJECT_DIR"/build.gradle.kts . 2>/dev/null || cp "$PROJECT_DIR"/build.gradle .
-          cp "$PROJECT_DIR"/settings.gradle.kts . 2>/dev/null || cp "$PROJECT_DIR"/settings.gradle .
+          cp -R "$PROJECT_DIR/app" .
+          cp -R "$PROJECT_DIR/gradle" .
+          cp "$PROJECT_DIR/build.gradle.kts" . 2>/dev/null || cp "$PROJECT_DIR/build.gradle" .
+          cp "$PROJECT_DIR/settings.gradle.kts" . 2>/dev/null || cp "$PROJECT_DIR/settings.gradle" .
 
       - name: Set up Java 17
         uses: actions/setup-java@v4
@@ -44,8 +46,8 @@ jobs:
         run: |
           sed -i 's#/META-INDEX/{AL2.0,LGPL2.1}#/META-INF/{AL2.0,LGPL2.1}#' app/build.gradle.kts || true
 
-      - - name: Build APK
-  run: gradle assembleDebug --stacktrace --no-daemon
+      - name: Build APK
+        run: gradle assembleDebug --stacktrace --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
