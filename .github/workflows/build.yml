@@ -42,6 +42,11 @@ jobs:
           echo "android.useAndroidX=true" >> gradle.properties
           echo "android.enableJetifier=true" >> gradle.properties
 
+      - name: Configure Gradle Memory
+        run: |
+          echo "org.gradle.jvmargs=-Xmx3g -XX:MaxMetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError" >> gradle.properties
+          echo "org.gradle.daemon=false" >> gradle.properties
+
       - name: Fix build configuration
         run: |
           sed -i 's#/META-INDEX/{AL2.0,LGPL2.1}#/META-INF/{AL2.0,LGPL2.1}#' app/build.gradle.kts || true
