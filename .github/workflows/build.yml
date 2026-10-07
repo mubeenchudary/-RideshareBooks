@@ -1,3 +1,7 @@
+      - name: Enable AndroidX
+        run: |
+          echo "android.useAndroidX=true" >> gradle.properties
+          echo "android.enableJetifier=true" >> gradle.properties
 name: Build RideshareBooks APK
 
 on:
